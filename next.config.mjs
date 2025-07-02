@@ -10,10 +10,6 @@ const nextConfig = {
     unoptimized: true,
     domains: ['localhost'],
   },
-  output: 'standalone',
-  experimental: {
-    outputFileTracingRoot: undefined,
-  },
   trailingSlash: false,
   poweredByHeader: false,
   compress: true,
