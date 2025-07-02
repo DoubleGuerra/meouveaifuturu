@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <title>Agente Me Ouve AI - Escuta Inteligente e Confidencial</title>
+    <meta name="description" content="Um espaço seguro e confidencial para diálogo, onde a IA entende, respeita e responde com empatia."/>
+    <link rel="icon" href="../usandoesse/site_atualizado_final/favicon.ico" type="image/x-icon" sizes="16x16"/>
+    <style>
+        /* Estilos básicos */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-image: linear-gradient(to bottom right, #f5f5f5, #e0f7fa);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header e Logo */
+        .header {
+            text-align: center;
+            padding-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding-bottom: 1rem;
+        }
+        
+        .logo-container {
+            margin-bottom: 1rem;
+            display: block;
+            text-align: center;
+        }
+        
+        .logo-image {
+            width: 400px; /* Aumentado de 200px para 400px */
+            height: auto;
+            box-shadow: none;
+            border-radius: 0;
+        }
+        
+        /* Seções principais */
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            padding: 1rem;
+        }
+        
+        /* Títulos */
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4682B4;
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4682B4;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        /* Interface de Chat */
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 70vh;
+        }
+        
+        .chat-header {
+            background-color: #B0E0E6;
+            color: #333;
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #4682B4;
+        }
+        
+        .chat-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+        
+        .chat-messages {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            margin-bottom: 0.5rem;
+            word-wrap: break-word;
+            position: relative;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message-agent {
+            background-color: #B0E0E6;
+            color: #333;
+            border-top-left-radius: 0;
+            align-self: flex-start;
+            border: 1px solid #4682B4;
+        }
+        
+        .message-user {
+            background-color: #4682B4;
+            color: white;
+            border-top-right-radius: 0;
+            align-self: flex-end;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            color: #666;
+            text-align: right;
+            margin-top: 0.25rem;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-top: 1px solid #ddd;
+        }
+        
+        .chat-input textarea {
+            flex-grow: 1;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 1.5rem;
+            font-size: 1rem;
+            resize: none;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .chat-input textarea:focus {
+            border-color: #4682B4;
+        }
+        
+        .chat-input button {
+            background-color: #4682B4;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .chat-input button:hover {
+            background-color: #3a6d99;
+        }
+        
+        .chat-input button svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+        
+        /* Tela de identificação */
+        .identification-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 2rem auto;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .identification-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+        }
+        
+        .form-label {
+            font-weight: bold;
+            color: #4682B4;
+        }
+        
+        .form-input {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus {
+            border-color: #4682B4;
+            outline: none;
+        }
+        
+        .form-button {
+            padding: 0.75rem 1.5rem;
+            background-color: #4682B4;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .form-button:hover {
+            background-color: #3a6d99;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Elementos futurísticos */
+        .ai-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .ai-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: #4682B4;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+            margin-left: 1rem;
+        }
+        
+        .typing-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: #4682B4;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+        
+        .typing-dot:nth-child(1) {
+            animation: typingDot 1.5s infinite 0s;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation: typingDot 1.5s infinite 0.3s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation: typingDot 1.5s infinite 0.6s;
+        }
+        
+        @keyframes typingDot {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+        
+        /* Botão de áudio */
+        .audio-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+        
+        .audio-button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .audio-button svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            fill: #4682B4;
+        }
+        
+        /* Status de conexão */
+        .connection-status {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .status-connected {
+            background-color: rgba(0, 128, 0, 0.1);
+            color: green;
+            border: 1px solid green;
+        }
+        
+        .status-disconnected {
+            background-color: rgba(255, 0, 0, 0.1);
+            color: red;
+            border: 1px solid red;
+        }
+        
+        .status-checking {
+            background-color: rgba(255, 165, 0, 0.1);
+            color: orange;
+            border: 1px solid orange;
+        }
+        
+        .status-fallback {
+            background-color: rgba(0, 0, 255, 0.1);
+            color: blue;
+            border: 1px solid blue;
+        }
+        
+        /* Footer */
+        footer {
+            width: 100%;
+            background-color: #f9f9f9;
+            padding: 1rem 0;
+            margin-top: 2rem;
+            border-top: 1px solid #eaeaea;
+            text-align: center;
+            font-size: 0.875rem;
+            color: #666;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .chat-container {
+                height: 80vh;
+                width: 95%;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+            
+            .identification-container {
+                width: 90%;
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Animações e efeitos */
+        .hidden {
+            display: none;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .recording-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background-color: #ffe0b2; /* Light orange */
+            color: #e65100; /* Dark orange */
+            border-top: 1px solid #ffb74d;
+            font-size: 0.9rem;
+        }
+        
+        .recording-indicator {
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: #e65100;
+            border-radius: 50%;
+            animation: pulse-recording 1s infinite alternate;
+        }
+        
+        @keyframes pulse-recording {
+            from { transform: scale(0.8); opacity: 0.6; }
+            to { transform: scale(1.2); opacity: 1; }
+        }
+        
+        /* Botão de voltar */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: transparent;
+            color: #4682B4;
+            border: 1px solid #4682B4;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+        
+        .back-button:hover {
+            background-color: #4682B4;
+            color: white;
+        }
+        
+        .back-button svg {
+            width: 1rem;
+            height: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <img class="logo-image" alt="Me Ouve AI Logo" src="../usandoesse/site_atualizado_final/logo-meouveai_white.gif"/>
+        </div>
+        <h1>Agente Me Ouve AI</h1>
+    </div>
+    
+    <main>
+        <a href="../usandoesse/site_atualizado_final/index.html" class="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Voltar para a página principal
+        </a>
+        
+        <!-- Status de conexão com n8n -->
+        <div class="connection-status status-checking" id="connection-status">
+            Verificando conexão com o servidor n8n...
+        </div>
+        
+        <!-- Interface de Chat -->
+        <div class="chat-container" id="chat-screen">
+            <div class="chat-header">
+                <div class="ai-indicator">
+                    <div class="ai-dot"></div>
+                    <span>Agente Me Ouve AI</span>
+                </div>
+                <h2>Conversa Confidencial</h2>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <!-- Mensagens virão do n8n -->
+            </div>
+            
+            <div class="chat-input">
+                <textarea id="user-input" placeholder="Digite sua mensagem..." rows="1"></textarea>
+                <button id="send-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                    </svg>
+                </button>
+                <button class="audio-button" id="audio-button" title="Gravar áudio">
+                    <svg id="mic-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                    </svg>
+                    <svg id="stop-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 6h12v12H6z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="recording-status hidden" id="recording-status">
+                <span class="recording-text">Gravando...</span>
+                <div class="recording-indicator"></div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>© 2025 Me Ouve AI. Todos os direitos reservados. | Sua privacidade é nossa prioridade.</p>
+    </footer>
+    
+    <script type="module">
+        import { sendTextMessage, sendAudioMessage, processN8NResponse, checkN8NConnection } from './n8n_integration.js';
+
+        // Elementos do DOM 
+        const chatScreen = document.getElementById('chat-screen');
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const connectionStatusDiv = document.getElementById('connection-status');
+        const audioButton = document.getElementById('audio-button');
+        const micIcon = document.getElementById('mic-icon');
+        const stopIcon = document.getElementById('stop-icon');
+        const recordingStatusDiv = document.getElementById('recording-status');
+
+        // Variáveis de controle
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+
+        // Funções do chat
+        function addMessage(message, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', `message-${sender}`);
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Função para exibir o indicador de digitação
+        function showTypingIndicator() {
+            const typingIndicator = document.createElement('div');
+            typingIndicator.classList.add('typing-indicator');
+            typingIndicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            typingIndicator.id = 'typing-indicator';
+            chatMessages.appendChild(typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Função para remover o indicador de digitação
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // Event listener para remover o indicador de digitação
+        document.addEventListener('n8n_response_received', removeTypingIndicator);
+
+        // Evento de envio de mensagem
+        sendButton.addEventListener('click', () => {
+            const message = userInput.value.trim();
+            if (message) {
+                addMessage(message, 'user');
+                userInput.value = '';
+                showTypingIndicator();
+                
+                sendTextMessage(message, (error, response) => {
+                    if (!error && response) {
+                        processN8NResponse(response, addMessage);
+                    } else {
+                        addMessage("Desculpe, ocorreu um erro ao processar sua mensagem.", "agent");
+                    }
+                });
+            }
+        });
+
+        // Evento de tecla Enter
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendButton.click();
+            }
+        });
+
+        // Evento de gravação de áudio
+        audioButton.addEventListener('click', async () => {
+            if (isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+                micIcon.classList.remove('hidden');
+                stopIcon.classList.add('hidden');
+                recordingStatusDiv.classList.add('hidden');
+            } else {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+
+                    mediaRecorder.ondataavailable = (event) => {
+                        audioChunks.push(event.data);
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        showTypingIndicator();
+                        sendAudioMessage(audioBlob, (error, response) => {
+                            if (!error && response) {
+                                processN8NResponse(response, addMessage);
+                            } else {
+                                addMessage("Desculpe, ocorreu um erro ao processar seu áudio.", "agent");
+                            }
+                        });
+                    };
+
+                    mediaRecorder.start();
+                    isRecording = true;
+                    micIcon.classList.add('hidden');
+                    stopIcon.classList.remove('hidden');
+                    recordingStatusDiv.classList.remove('hidden');
+                } catch (error) {
+                    console.error('Erro ao acessar o microfone:', error);
+                    alert('Não foi possível acessar o microfone. Verifique as permissões.');
+                }
+            }
+        });
+
+        // Verificar conexão e iniciar chat
+        checkN8NConnection((error, status) => {
+            if (error) {
+                connectionStatusDiv.textContent = `Erro de conexão: ${status.message}`;
+                connectionStatusDiv.classList.remove('status-checking');
+                connectionStatusDiv.classList.add('status-disconnected');
+            } else {
+                connectionStatusDiv.textContent = status.message;
+                connectionStatusDiv.classList.remove('status-checking');
+                connectionStatusDiv.classList.add('status-connected');
+                
+                // Iniciar chat
+                sendTextMessage("start_chat", (error, response) => {
+                    if (!error && response) {
+                        processN8NResponse(response, addMessage);
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
+            const message = userInput.value.trim();
+            if (message && currentUserId) {
+                addMessage(message, "user");
+                userInput.value = "";
+                showTypingIndicator();
+                sendTextMessage(message, currentUserId, (err, data) => {
+                    if (!err) {
+                        processN8NResponse(data, addMessage);
+                    } else {
+                        addMessage("Desculpe, não consegui processar sua mensagem. Por favor, tente novamente.", "agent");
+                    }
+                });
+            }
+        });
+
+        userInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                sendButton.click();
+            }
+        });
+
+        // Lógica para gravação de áudio
+        audioButton.addEventListener("click", async () => {
+            if (isRecording) {
+                // Parar gravação
+                mediaRecorder.stop();
+                isRecording = false;
+                micIcon.classList.remove("hidden");
+                stopIcon.classList.add("hidden");
+                recordingStatusDiv.classList.add("hidden");
+            } else {
+                // Iniciar gravação
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+
+                    mediaRecorder.ondataavailable = (event) => {
+                        audioChunks.push(event.data);
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+                        if (currentUserId) {
+                            showTypingIndicator();
+                            sendAudioMessage(audioBlob, currentUserId, (err, data) => {
+                                if (!err) {
+                                    processN8NResponse(data, addMessage);
+                                } else {
+                                    addMessage("Desculpe, não consegui processar seu áudio. Por favor, tente novamente.", "agent");
+                                }
+                            });
+                        }
+                    };
+
+                    mediaRecorder.start();
+                    isRecording = true;
+                    micIcon.classList.add("hidden");
+                    stopIcon.classList.remove("hidden");
+                    recordingStatusDiv.classList.remove("hidden");
+                } catch (error) {
+                    console.error("Erro ao acessar o microfone:", error);
+                    alert("Não foi possível acessar o microfone. Por favor, verifique as permissões.");
+                }
+            }
+        });
+
+        // Verificar conexão com n8n ao carregar a página
+        checkN8NConnection((err, status) => {
+            if (err) {
+                connectionStatusDiv.textContent = `Erro de conexão: ${status.message}`;
+                connectionStatusDiv.classList.remove("status-checking");
+                connectionStatusDiv.classList.add("status-disconnected");
+            } else {
+                connectionStatusDiv.textContent = status.message;
+                connectionStatusDiv.classList.remove("status-checking");
+                connectionStatusDiv.classList.add("status-connected");
+                
+                // Enviar sinal para o n8n iniciar a conversa
+                sendTextMessage("start_chat", (err, data) => {
+                    if (!err) {
+                        processN8NResponse(data, addMessage);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+                
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    sendAudioToN8N(audioBlob);
+                    audioChunks = [];
+                };
+                
+                mediaRecorder.start();
+                isRecording = true;
+                audioButton.style.fill = 'red';
+                
+            } catch (error) {
+                console.error('Erro ao acessar o microfone:', error);
+                alert('Não foi possível acessar o microfone. Verifique as permissões do navegador.');
+            }
+        }
+        
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+                audioButton.style.fill = '#4682B4';
+                
+                // Adicionar mensagem indicando envio de áudio
+                addMessage('Áudio enviado', 'user');
+                
+                // Mostrar indicador de digitação enquanto aguarda resposta
+                showTypingIndicator();
+            }
+        }
+        
+        function sendAudioToN8N(audioBlob) {
+            // Enviar áudio para o n8n
+            sendAudioMessage(audioBlob, userId, (error, response) => {
+                if (error) {
+                    console.error('Erro ao enviar áudio para n8n:', error);
+                    removeTypingIndicator();
+                } else {
+                    console.log('Resposta do n8n para áudio:', response);
+                    removeTypingIndicator();
+                    
+                    // Exibir resposta do n8n se disponível
+                    if (response && response.message) {
+                        addMessage(response.message, 'agent');
+                    }
+                }
+            });
+        }
+        
+        // Adicionar evento para remover o indicador de digitação quando receber resposta
+        document.addEventListener('n8n_response_received', () => {
+            removeTypingIndicator();
+        });
+        
+        // Forçar modo fallback para testes (remover em produção)
+        // Descomente a linha abaixo para forçar o modo fallback
+        // setFallbackMode(true);
+    </script>
+</body>
+</html>
+
+
+    <script type="module">
+        import { sendTextMessage, sendAudioMessage, fetchConversationHistory, processN8NResponse, checkN8NConnection, setFallbackMode } from './n8n_integration.js';
+
+        const identificationScreen = document.getElementById('identification-screen');
+        const chatScreen = document.getElementById('chat-screen');
+        const startChatButton = document.getElementById('start-chat-button');
+        const firstTimeYes = document.getElementById('first-time-yes');
+        const firstTimeNo = document.getElementById('first-time-no');
+        const createIdGroup = document.getElementById('create-id-group');
+        const enterIdGroup = document.getElementById('enter-id-group');
+        const userIdCreate = document.getElementById('user-id-create');
+        const userIdEnter = document.getElementById('user-id-enter');
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const connectionStatusDiv = document.getElementById('connection-status');
+        const audioButton = document.getElementById('audio-button');
+        const micIcon = document.getElementById('mic-icon');
+        const stopIcon = document.getElementById('stop-icon');
+        const recordingStatusDiv = document.getElementById('recording-status');
+
+        let currentUserId = null;
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+
+        // Função para adicionar mensagens ao chat
+        function addMessage(message, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', `message-${sender}`);
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Função para exibir o indicador de digitação
+        function showTypingIndicator() {
+            const typingIndicator = document.createElement('div');
+            typingIndicator.classList.add('typing-indicator');
+            typingIndicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            typingIndicator.id = 'typing-indicator';
+            chatMessages.appendChild(typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Função para remover o indicador de digitação
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // Event listener para remover o indicador de digitação quando uma resposta do n8n é recebida
+        document.addEventListener('n8n_response_received', removeTypingIndicator);
+
+        // Lógica para alternar entre 
+
+
+primeira vez / ID existente
+        firstTimeYes.addEventListener("change", () => {
+            if (firstTimeYes.checked) {
+                createIdGroup.classList.remove("hidden");
+                enterIdGroup.classList.add("hidden");
+            }
+        });
+
+        firstTimeNo.addEventListener("change", () => {
+            if (firstTimeNo.checked) {
+                createIdGroup.classList.add("hidden");
+                enterIdGroup.classList.remove("hidden");
+            }
+        });
+
+        // Lógica para iniciar o chat
+        startChatButton.addEventListener("click", () => {
+            let userIdInput;
+            if (firstTimeYes.checked) {
+                userIdInput = userIdCreate.value;
+            } else {
+                userIdInput = userIdEnter.value;
+            }
+
+            if (userIdInput && userIdInput.length === 6) {
+                currentUserId = userIdInput;
+                identificationScreen.classList.add("hidden");
+                chatScreen.classList.remove("hidden");
+                addMessage("Olá! Sou o Agente Me Ouve AI. Estou aqui para ouvir, com respeito. Durante a conversa, investigue de forma leve. Se quiser, pode me contar mais sobre o que está sentindo.", "agent");
+                fetchConversationHistory(currentUserId, (err, data) => {
+                    if (!err && data && data.conversations) {
+                        data.conversations.forEach(msg => {
+                            addMessage(msg.content, msg.sender);
+                        });
+                    }
+                });
+            } else {
+                alert("Por favor, insira uma identificação numérica válida de 6 dígitos.");
+            }
+        });
+
+        // Lógica para enviar mensagem de texto
+        sendButton.addEventListener("click", () => {
+            const message = userInput.value.trim();
+            if (message && currentUserId) {
+                addMessage(message, "user");
+                userInput.value = "";
+                showTypingIndicator();
+                sendTextMessage(message, currentUserId, (err, data) => {
+                    if (!err) {
+                        processN8NResponse(data, addMessage);
+                    } else {
+                        addMessage("Desculpe, não consegui processar sua mensagem. Por favor, tente novamente.", "agent");
+                    }
+                });
+            }
+        });
+
+        userInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                sendButton.click();
+            }
+        });
+
+        // Lógica para gravação de áudio
+        audioButton.addEventListener("click", async () => {
+            if (isRecording) {
+                // Parar gravação
+                mediaRecorder.stop();
+                isRecording = false;
+                micIcon.classList.remove("hidden");
+                stopIcon.classList.add("hidden");
+                recordingStatusDiv.classList.add("hidden");
+            } else {
+                // Iniciar gravação
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+
+                    mediaRecorder.ondataavailable = (event) => {
+                        audioChunks.push(event.data);
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+                        if (currentUserId) {
+                            showTypingIndicator();
+                            sendAudioMessage(audioBlob, currentUserId, (err, data) => {
+                                if (!err) {
+                                    processN8NResponse(data, addMessage);
+                                } else {
+                                    addMessage("Desculpe, não consegui processar seu áudio. Por favor, tente novamente.", "agent");
+                                }
+                            });
+                        }
+                    };
+
+                    mediaRecorder.start();
+                    isRecording = true;
+                    micIcon.classList.add("hidden");
+                    stopIcon.classList.remove("hidden");
+                    recordingStatusDiv.classList.remove("hidden");
+                } catch (error) {
+                    console.error("Erro ao acessar o microfone:", error);
+                    alert("Não foi possível acessar o microfone. Por favor, verifique as permissões.");
+                }
+            }
+        });
+
+        // Verificar conexão com n8n ao carregar a página
+        checkN8NConnection((err, status) => {
+            if (err) {
+                connectionStatusDiv.textContent = `Erro de conexão: ${status.message}`;
+                connectionStatusDiv.classList.remove("status-checking");
+                connectionStatusDiv.classList.add("status-disconnected");
+            } else {
+                connectionStatusDiv.textContent = status.message;
+                connectionStatusDiv.classList.remove("status-checking");
+                connectionStatusDiv.classList.add("status-connected");
+                
+                // Enviar sinal para o n8n iniciar a conversa
+                sendTextMessage("start_chat", (err, data) => {
+                    if (!err) {
+                        processN8NResponse(data, addMessage);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

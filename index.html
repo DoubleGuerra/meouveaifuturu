@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Me Ouve AI - Escuta Inteligente para Empresas Responsáveis</title>
+    <meta name="description" content="Soluções com IA para liberar o potencial emocional e estratégico das organizações.">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+        .gradient-bg-multi {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 25%, #06b6d4 50%, #0891b2 75%, #1e40af 100%);
+        }
+        .blue-gradient-text {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .highlight-text {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .wave-shape {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        .wave-shape svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 60px;
+        }
+        .wave-shape .shape-fill {
+            fill: #FFFFFF;
+        }
+        .feature-card:hover, .benefit-card:hover, .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        :root {
+            --blue-navy: #1e3a8a;
+            --blue-royal: #1e40af;
+            --blue-cobalt: #2563eb;
+            --blue-azure: #3b82f6;
+            --blue-sky: #0ea5e9;
+            --blue-light: #38bdf8;
+            --blue-turquoise: #06b6d4;
+            --blue-steel: #0891b2;
+            --accent-300: #fbbf24;
+            --brand-red: #ef4444;
+        }
+        .text-blue-navy { color: var(--blue-navy); }
+        .text-blue-royal { color: var(--blue-royal); }
+        .text-blue-cobalt { color: var(--blue-cobalt); }
+        .text-blue-azure { color: var(--blue-azure); }
+        .text-blue-sky { color: var(--blue-sky); }
+        .text-blue-light { color: var(--blue-light); }
+        .text-blue-turquoise { color: var(--blue-turquoise); }
+        .text-blue-steel { color: var(--blue-steel); }
+        .text-accent-300 { color: var(--accent-300); }
+        .text-brand-red { color: var(--brand-red); }
+        .bg-blue-navy { background-color: var(--blue-navy); }
+        .bg-blue-royal { background-color: var(--blue-royal); }
+        .bg-blue-cobalt { background-color: var(--blue-cobalt); }
+        .bg-blue-azure { background-color: var(--blue-azure); }
+        .bg-blue-sky { background-color: var(--blue-sky); }
+        .bg-blue-light { background-color: var(--blue-light); }
+        .bg-blue-turquoise { background-color: var(--blue-turquoise); }
+        .bg-blue-steel { background-color: var(--blue-steel); }
+        .border-blue-navy { border-color: var(--blue-navy); }
+        .border-blue-royal { border-color: var(--blue-royal); }
+        .border-blue-cobalt { border-color: var(--blue-cobalt); }
+        .border-blue-azure { border-color: var(--blue-azure); }
+        .border-blue-sky { border-color: var(--blue-sky); }
+        .border-blue-light { border-color: var(--blue-light); }
+        .border-blue-turquoise { border-color: var(--blue-turquoise); }
+        .border-blue-steel { border-color: var(--blue-steel); }
+        .hover\\:bg-blue-navy:hover { background-color: var(--blue-navy); }
+        .hover\\:bg-blue-royal:hover { background-color: var(--blue-royal); }
+        .hover\\:bg-blue-azure:hover { background-color: var(--blue-azure); }
+        .hover\\:bg-blue-50:hover { background-color: #eff6ff; }
+        .hover\\:text-blue-cobalt:hover { color: var(--blue-cobalt); }
+
+        /* New styles for GIF and content reveal */
+        .initial-load-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease-in-out;
+        }
+        .initial-load-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .initial-load-screen img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        .content-wrapper {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .content-wrapper.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scroll effects */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Initial Load Screen with GIF -->
+    <div class="initial-load-screen" id="initial-load-screen">
+        <img src="logo-meouveai_gif.gif" alt="Me Ouve AI Logo Grande">
+    </div>
+
+    <div class="content-wrapper" id="main-content">
+        <!-- Header -->
+        <header class="sticky top-0 z-50 bg-white shadow-none border-b border-white">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center">
+                        <img src="logo-meouveai_gif.gif" alt="Me Ouve AI Logo" class="h-48 w-auto mr-3">
+                        <span class="text-brand-red font-medium text-2xl mt-1 font-montserrat" style="letter-spacing: 0.5px;">me ouve AI</span>
+                    </div>
+                    <!-- Menu de navegação removido -->
+                    <div>
+                        <button class="hidden md:inline-block bg-blue-azure hover:bg-blue-royal text-white font-medium py-3 px-8 rounded-full transition-colors text-lg">
+                            Agendar demonstração
+                        </button>
+                        <button class="md:hidden text-blue-azure">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Spacer to prevent content from being hidden under sticky header -->
+        <div class="h-16"></div>
+        <!-- Hero Section -->
+        <section class="relative gradient-bg-multi text-white py-20 md:py-32 fade-in-section">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-4xl mx-auto text-center">
+                    <p class="text-xl md:text-2xl mb-8 text-blue-100 leading-relaxed font-medium">
+                        Empresas que escutam crescem. Mas as que escutam com inteligência emocional
+                        e dados estratégicos criam culturas imbatíveis, decisões cirúrgicas e marcas
+                        inesquecíveis.
+                    </p>
+                    <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-10 font-montserrat leading-tight
+                        highlight-text">
+                        Você vai seguir o convencional<br>ou se tornar <span style="color: #FF4500;">inesquecível</span>?
+                    </h1>
+                    <div class="flex flex-col md:flex-row justify-center gap-4">
+                        <a href="chat/index.html" style="background-color: #FF4500; color: white;" class="hover:opacity-90 font-semibold py-3 px-8 rounded-full transition-colors text-center">Área Exclusiva</a>
+                        <a href="#" style="background-color: #FF4500; color: white;" class="hover:opacity-90 font-semibold py-3 px-8 rounded-full transition-colors text-center">Área Restrita</a>
+                    </div>
+                </div>
+            </div>
+            <div class="wave-shape">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                    preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-
+                        17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.3
+                        5A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                </svg>
+            </div>
+        </section>
+        <!-- Team Image Section -->
+        <section class="py-16 bg-white fade-in-section">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-5xl mx-auto">
+                    <div class="rounded-xl overflow-hidden shadow-lg border-4 border-blue-sky">
+                        <!-- Imagem de pessoas reais trabalhando felizes e engajadas -->
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-100">
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-
+                                4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=cr
+                                op&w=1200&q=80"
+                                alt="Equipe de colaboradores trabalhando felizes e engajados"
+                                class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="text-center mt-8">
+                        <h3 class="text-2xl font-semibold text-blue-navy mb-3 font-montserrat blue-gradient-
+                            text">Colaboradores Engajados e Felizes</h3>
+                        <p class="text-gray-600 max-w-3xl mx-auto">Nossa plataforma promove um ambiente de
+                            trabalho onde todos se sentem valorizados, apoiados e motivados a dar o seu melhor, resultando em
+                            maior produtividade e satisfação.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-blue-50 fade-in-section">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-navy mb-4 font-montserrat">Recursos
+                        Poderosos</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Transforme a saúde emocional da sua
+                        equipe com nossas ferramentas avançadas de inteligência emocional.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature 1 - Conformidade com NR-1 (Agora primeiro e com cor turquesa) -->
+                    <div class="feature-card bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-turquoise
+                        transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-turquoise" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-
+                                4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0
+                                5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-turquoise mb-3 font-montserrat">Conformidade
+                            com NR-1</h3>
+                        <p class="text-gray-600">Garantia de que sua empresa esteja em total conformidade com
+                            as novas exigências da NR-1.</p>
+                    </div>
+                    <!-- Feature 2 - Alterado de "Avaliação Emocional" para "Análise de Sentimentos" -->
+                    <div class="feature-card bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-light
+                        transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-light" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2
+                                0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2
+                                2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-light mb-3 font-montserrat">Análise de
+                            Sentimentos</h3>
+                        <p class="text-gray-600">Ferramentas de diagnóstico avançadas para identificar padrões
+                            emocionais e áreas que precisam de atenção.</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="feature-card bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-sky
+                        transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-sky" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2
+                                2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6
+                                0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-sky mb-3 font-montserrat">Análise de
+                            Dados</h3>
+                        <p class="text-gray-600">Relatórios detalhados e insights acionáveis para acompanhar o
+                            progresso e identificar tendências.</p>
+                    </div><!-- Feature 4 -->
+                    <div class="feature-card bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-steel
+                        transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-steel" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-
+                                2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0
+                                015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6
+                                0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-steel mb-3 font-montserrat">Apoio ao RH</h3>
+                        <p class="text-gray-600">Relatórios Anonimizados com insights valiosos sobre o clima
+                            organizacional para ações inteligentes e assertivas baseadas em dados.</p>
+                    </div>
+                    <!-- Feature 5 -->
+                    <div class="feature-card bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-azure
+                        transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-azure" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2
+                                0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2
+                                0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-azure mb-3 font-montserrat">Comunicação
+                            Efetiva</h3>
+                        <p class="text-gray-600">Ferramentas para melhorar a comunicação e resolver conflitos
+                            de forma construtiva.</p>
+                    </div>
+                    <!-- Feature 6 - Atenção Personalizada (Substituindo Treinamento Personalizado) -->
+                    <div class="feature-card bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-royal
+                        transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-royal" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4
+                                4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0
+                                018 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-royal mb-3 font-montserrat">AtençãoPersonalizada</h3>
+                        <p class="text-gray-600">Programas de desenvolvimento emocional adaptados às
+                            necessidades específicas de cada colaborador.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Leadership Solutions Section - Título e texto atualizados -->
+        <section id="leadership" class="py-20 bg-gradient-to-r from-blue-navy/5 to-blue-sky/5 fade-in-section">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-navy mb-4 font-montserrat">Liderança que
+                        cresce com dados, sensibilidade e visão de futuro</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Aliamos inteligência emocional e
+                        ferramentas tecnológicas avançadas para apoiar executivos em sua jornada de liderança, muitas
+                        vezes solitária, mas nunca sem direção.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                    <div class="bg-white p-8 rounded-xl shadow-md border-l-4 border-blue-royal">
+                        <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-royal" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663
+                                17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5
+                                5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-
+                                2.386l-.548-.547z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-blue-navy mb-4 font-montserrat">Apoio à Tomada de
+                            Decisão</h3>
+                        <p class="text-gray-600 mb-6">Nossa plataforma oferece ferramentas de análise e
+                            inteligência artificial para auxiliar executivos na tomada de decisões estratégicas, reduzindo
+                            incertezas e maximizando resultados.</p>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-azure mt-0.5 mr-2"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4
+                                    4L19 7" />
+                                </svg>
+                                <span class="text-gray-700">Avaliação de cenários de negócios</span>
+                            </li>
+                            <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-azure mt-0.5 mr-2"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4
+                                4L19 7" />
+                            </svg>
+                            <span class="text-gray-700">Identificação de oportunidades e riscos</span>
+                            </li>
+                            <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-azure mt-0.5 mr-2"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4
+                                4L19 7" />
+                            </svg>
+                            <span class="text-gray-700">Otimização de processos e recursos</span>
+                            </li>
+                        </ul>
+                        <a href="#" class="text-blue-cobalt font-semibold flex items-center group">
+                            Saiba mais
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 group-hover:translate-x-1
+                                transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-md border-l-4 border-blue-steel">
+                        <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-steel" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4
+                                14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-blue-navy mb-4 font-montserrat">Desenvolvimento de
+                            Líderes</h3>
+                        <p class="text-gray-600 mb-6">Programas de coaching e mentoria baseados em IA para
+                            aprimorar as habilidades de liderança, promover a inteligência emocional e capacitar líderes
+                            para os desafios do futuro.</p>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-azure mt-0.5 mr-2"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4
+                                    4L19 7" />
+                                </svg>
+                                <span class="text-gray-700">Feedback 360° com IA</span>
+                            </li>
+                            <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-azure mt-0.5 mr-2"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4
+                                4L19 7" />
+                            </svg>
+                            <span class="text-gray-700">Planos de desenvolvimento personalizados</span>
+                            </li>
+                            <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-azure mt-0.5 mr-2"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4
+                                4L19 7" />
+                            </svg>
+                            <span class="text-gray-700">Simulações de cenários de liderança</span>
+                            </li>
+                        </ul>
+                        <a href="#" class="text-blue-cobalt font-semibold flex items-center group">
+                            Saiba mais
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 group-hover:translate-x-1
+                                transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Benefits Section -->
+        <section id="benefits" class="py-20 bg-white fade-in-section">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-navy mb-4 font-montserrat">Benefícios para
+                        sua Empresa</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Invista no bem-estar e no potencial de
+                        seus colaboradores e colha resultados extraordinários.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Benefit 1 -->
+                    <div class="benefit-card bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-azure
+                        transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-azure" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8L11 3m-4 0H3v18h18V11m-6 0a5 5 0 11-10 0 5 5 0 0110 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-navy mb-3 font-montserrat">Aumento da
+                            Produtividade</h3>
+                        <p class="text-gray-600">Colaboradores mais felizes e engajados são naturalmente mais
+                            produtivos e inovadores.</p>
+                    </div>
+                    <!-- Benefit 2 -->
+                    <div class="benefit-card bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-sky
+                        transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-sky" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3
+                                1.343 3 3v2a3 3 0 01-3 3m0 0V5c0-1.657-1.343-3-3-3S6 3.343 6 5v5m-3 0h12a2 2 0 012 2v5a2 2 0
+                                01-2 2H3a2 2 0 01-2-2v-5a2 2 0 012-2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-navy mb-3 font-montserrat">Redução do
+                            Turnover</h3>
+                        <p class="text-gray-600">Ambientes de trabalho saudáveis retêm talentos e diminuem os
+                            custos com rotatividade.</p>
+                    </div>
+                    <!-- Benefit 3 -->
+                    <div class="benefit-card bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-turquoise
+                        transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-turquoise" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-
+                                4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0
+                                5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-navy mb-3 font-montserrat">Melhora do Clima
+                            Organizacional</h3>
+                        <p class="text-gray-600">Um ambiente positivo e de apoio fomenta a colaboração e a
+                            inovação.</p>
+                    </div>
+                    <!-- Benefit 4 -->
+                    <div class="benefit-card bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-steel
+                        transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-steel" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-
+                                2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0
+                                015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6
+                                0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-navy mb-3 font-montserrat">Fortalecimento da
+                            Marca Empregadora</h3>
+                        <p class="text-gray-600">Empresas que cuidam de seus colaboradores atraem e retêm os
+                            melhores talentos.</p>
+                    </div>
+                    <!-- Benefit 5 -->
+                    <div class="benefit-card bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-azure
+                        transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-azure" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2
+                                0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2
+                                0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-navy mb-3 font-montserrat">Tomada de Decisão
+                            Baseada em Dados</h3>
+                        <p class="text-gray-600">Insights precisos sobre o bem-estar da equipe para decisões
+                            estratégicas e eficazes.</p>
+                    </div>
+                    <!-- Benefit 6 -->
+                    <div class="benefit-card bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-royal
+                        transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-royal" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4
+                                4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0
+                                018 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-navy mb-3 font-montserrat">Inovação e
+                            Criatividade</h3>
+                        <p class="text-gray-600">Colaboradores com bem-estar emocional elevado são mais
+                            propensos a inovar e contribuir com novas ideias.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Call to Action Section -->
+        <section class="py-20 bg-gradient-to-r from-blue-navy to-blue-royal text-white text-center fade-in-section">
+            <div class="container mx-auto px-4 md:px-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 font-montserrat">Pronto para transformar sua
+                    empresa?</h2>
+                <p class="text-xl mb-8 max-w-3xl mx-auto">Agende uma demonstração gratuita e descubra como a Me
+                    Ouve AI pode impulsionar o bem-estar e a produtividade da sua equipe.</p>
+            </div>
+        </section>
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-10 fade-in-section">
+            <div class="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Me Ouve AI</h3>
+                    <p class="text-gray-400">Soluções inovadoras para o bem-estar e produtividade da sua
+                        equipe.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Links Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-white">Recursos</a></li>
+                        <li><a href="#leadership" class="text-gray-400 hover:text-white">Liderança</a></li>
+                        <li><a href="#benefits" class="text-gray-400 hover:text-white">Benefícios</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Contato</h3>
+                    <p class="text-gray-400">Email: contato@meouveai.com</p>
+                    <p class="text-gray-400">Telefone: (XX) XXXX-XXXX</p>
+                </div>
+            </div>
+            <div class="text-center text-gray-500 mt-10">
+                &copy; 2023 Me Ouve AI. Todos os direitos reservados.
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialLoadScreen = document.getElementById('initial-load-screen');
+            const mainContent = document.getElementById('main-content');
+
+            // Hide GIF screen after a short delay and show content
+            setTimeout(() => {
+                initialLoadScreen.classList.add('hidden');
+                mainContent.classList.add('visible');
+            }, 3000); // Adjust delay as needed
+
+            // Smooth scroll effect for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Intersection Observer for scroll effects
+            const fadeInSections = document.querySelectorAll('.fade-in-section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Stop observing once visible
+                    }
+                });
+            }, observerOptions);
+
+            fadeInSections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>

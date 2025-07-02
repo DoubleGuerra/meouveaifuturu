@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Webhook Response Handler</title>
+</head>
+<body>
+    <script>
+        // Este endpoint receberá as respostas do n8n
+        console.log("Webhook response handler carregado")
+        
+        // Se for uma requisição POST, processar
+        if (window.location.search.includes('webhook=true')) {
+            // Simular recebimento de webhook
+            console.log("Processando resposta do webhook...")
+        }
+    </script>
+</body>
+</html>

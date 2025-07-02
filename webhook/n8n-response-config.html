@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuração N8N Response Webhook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .config-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .endpoint {
+            background: #f8f9fa;
+            padding: 10px;
+            border-left: 4px solid #007bff;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .method {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .post { background: #28a745; color: white; }
+        .get { background: #17a2b8; color: white; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Configuração do Webhook de Resposta N8N</h1>
+    
+    <div class="config-section">
+        <h2>📡 Endpoints Disponíveis</h2>
+        
+        <h3>1. Receber Respostas do N8N</h3>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            https://meouveai.com/api/webhook/response
+        </div>
+        <p><strong>Payload esperado:</strong></p>
+        <pre>{
+  "neuralId": "M284745@",
+  "message": "Resposta do agente",
+  "timestamp": "2024-01-01T12:00:00Z",
+  "type": "agent_response"
+}</pre>
+        
+        <h3>2. Buscar Respostas Pendentes (Polling)</h3>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            https://meouveai.com/api/responses?neuralId=M284745@
+        </div>
+        
+        <h3>3. Endpoint Alternativo</h3>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            https://meouveai.com/api/webhook/response?neuralId=M284745@
+        </div>
+    </div>
+    
+    <div class="config-section">
+        <h2>⚙️ Configuração no N8N</h2>
+        
+        <h3>Webhook Response Node:</h3>
+        <ul>
+            <li><strong>URL:</strong> https://meouveai.com/api/webhook/response</li>
+            <li><strong>Método:</strong> POST</li>
+            <li><strong>Headers:</strong> Content-Type: application/json</li>
+            <li><strong>Body:</strong> JSON com neuralId e message</li>
+        </ul>
+        
+        <h3>Exemplo de configuração:</h3>
+        <pre>{
+  "url": "https://meouveai.com/api/webhook/response",
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "neuralId": "{{ $json.neuralId }}",
+    "message": "{{ $json.response }}",
+    "timestamp": "{{ $now }}",
+    "source": "n8n_workflow"
+  }
+}</pre>
+    </div>
+    
+    <div class="config-section">
+        <h2>🧪 Teste da Configuração</h2>
+        <button onclick="testWebhook()">Testar Webhook</button>
+        <button onclick="testPolling()">Testar Polling</button>
+        <div id="test-results" style="margin-top: 20px; padding: 10px; background: #f8f9fa; border-radius: 4px;"></div>
+    </div>
+    
+    <script>
+        async function testWebhook() {
+            const results = document.getElementById('test-results')
+            results.innerHTML = '🧪 Testando webhook...'
+            
+            try {
+                const response = await fetch('/api/webhook/response', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        neuralId: 'TEST123@',
+                        message: 'Mensagem de teste do webhook',
+                        timestamp: new Date().toISOString(),
+                        source: 'test'
+                    })
+                })
+                
+                const data = await response.json()
+                results.innerHTML = `✅ Webhook funcionando: ${JSON.stringify(data, null, 2)}`
+            } catch (error) {
+                results.innerHTML = `❌ Erro no webhook: ${error.message}`
+            }
+        }
+        
+        async function testPolling() {
+            const results = document.getElementById('test-results')
+            results.innerHTML = '🔄 Testando polling...'
+            
+            try {
+                const response = await fetch('/api/responses?neuralId=TEST123@')
+                const data = await response.json()
+                results.innerHTML = `✅ Polling funcionando: ${JSON.stringify(data, null, 2)}`
+            } catch (error) {
+                results.innerHTML = `❌ Erro no polling: ${error.message}`
+            }
+        }
+    </script>
+</body>
+</html>
