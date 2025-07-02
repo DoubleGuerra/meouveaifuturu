@@ -1,884 +1,307 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-    <title>Me Ouve AI - Chat Confidencial</title>
-    <link rel="icon" href="../favicon.ico" type="image/x-icon" sizes="16x16"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - Me Ouve AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos básicos */
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom right, #1a2e44, #0f172a);
-            color: #fff;
-            display: flex;
-            flex-direction: column;
+            background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
             min-height: 100vh;
+            color: white;
             overflow-x: hidden;
-            width: 100%;
         }
-        
-        .container {
-            width: 100%;
+
+        .chat-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        
-        /* Header e Logo */
+
         .header {
             text-align: center;
-            padding-top: 1rem;
-            margin-bottom: 1rem;
-            width: 100%;
-        }
-        
-        /* Seções principais */
-        main {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            width: 100%;
-            padding: 0.5rem;
-            position: relative;
-            z-index: 10;
-        }
-        
-        /* Background pattern */
-        .background-pattern {
-            position: fixed;
-            inset: 0;
-            opacity: 0.2;
-            z-index: 1;
-            pointer-events: none;
-        }
-        
-        .background-pattern .blob-1 {
-            position: absolute;
-            top: 25%;
-            left: 25%;
-            width: 24rem;
-            height: 24rem;
-            background-color: rgba(56, 189, 248, 0.1);
-            border-radius: 9999px;
-            filter: blur(5rem);
-            animation: pulse 8s infinite;
-        }
-        
-        .background-pattern .blob-2 {
-            position: absolute;
-            bottom: 25%;
-            right: 25%;
-            width: 24rem;
-            height: 24rem;
-            background-color: rgba(6, 182, 212, 0.1);
-            border-radius: 9999px;
-            filter: blur(5rem);
-            animation: pulse 8s infinite 2s;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.2; }
-            50% { transform: scale(1.1); opacity: 0.3; }
-            100% { transform: scale(1); opacity: 0.2; }
-        }
-        
-        /* Títulos */
-        h1 {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(to right, #7dd3fc, #06b6d4, #7dd3fc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
-            margin-top: 0;
-        }
-        
-        h2 {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 0.75rem;
-            text-align: center;
-        }
-        
-        /* Chat container */
-        .chat-container {
-            display: flex; 
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
             border-radius: 1rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            flex-direction: column;
-            height: 75vh;
-            backdrop-filter: blur(16px);
-        }
-        
-        .chat-header {
-            background-color: rgba(56, 189, 248, 0.1);
-            padding: 0.25rem;
-            text-align: center;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-            position: relative;
-            min-height: 40px;
+            border: 1px solid rgba(6, 182, 212, 0.2);
         }
 
-        .chat-header-title {
-             color: #e0f2fe;
-             font-weight: bold;
-             padding: 0.5rem;
+        .header h1 {
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 700;
         }
-        
-        .chat-messages {
-            flex-grow: 1;
-            padding: 0.75rem;
-            overflow-y: auto;
+
+        .header p {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 1rem 0 0 0;
+            font-size: 1.1rem;
+        }
+
+        .chat-interface {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid rgba(6, 182, 212, 0.2);
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
-            -webkit-overflow-scrolling: touch;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
-        
+
+        .chat-header {
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .connection-status {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .messages-container {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            min-height: 400px;
+            max-height: 500px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
         .message {
-            max-width: 85%;
-            padding: 0.75rem 1rem;
-            border-radius: 1rem;
-            margin-bottom: 0.5rem;
-            word-wrap: break-word;
-            position: relative;
-            animation: fadeIn 0.3s ease-in-out;
-            font-size: 0.95rem;
-            line-height: 1.4;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.3s ease;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .message-agent {
-            background-color: rgba(56, 189, 248, 0.2);
-            color: #e0f2fe;
-            border-top-left-radius: 0;
-            align-self: flex-start;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-        }
-        
-        .message-user {
-            background-color: rgba(16, 185, 129, 0.2);
-            color: #d1fae5;
-            border-top-right-radius: 0;
-            align-self: flex-end;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-        
-        .message-system {
-            background-color: rgba(168, 85, 247, 0.2);
-            color: #e9d5ff;
-            border-radius: 0.5rem;
-            align-self: center;
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            text-align: center;
-            font-style: italic;
-            max-width: 95%;
-        }
-        
-        .message-time {
-            font-size: 0.7rem;
-            color: #94a3b8;
+
+        .message.user {
             text-align: right;
-            margin-top: 0.25rem;
         }
-        
-        /* Botões de ação rápida */
-        .quick-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-            justify-content: center;
+
+        .message.agent {
+            text-align: left;
         }
-        
-        .quick-action-btn {
-            padding: 0.5rem 1rem;
-            background: linear-gradient(to right, #38bdf8, #06b6d4);
-            color: white;
-            border: none;
-            border-radius: 1rem;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-        
-        .quick-action-btn:hover {
-            background: linear-gradient(to right, #0ea5e9, #0891b2);
-            transform: translateY(-1px);
-        }
-        
-        .quick-action-btn:active {
-            transform: translateY(0);
-        }
-        
-        /* Neural ID display */
-        .neural-id-display {
-            background-color: rgba(34, 197, 94, 0.2);
-            color: #bbf7d0;
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-            margin-top: 0.5rem;
-            text-align: center;
-            font-family: monospace;
-            font-size: 1.2rem;
-            letter-spacing: 0.1em;
-            font-weight: bold;
-        }
-        
-        .neural-id-input-container {
-            margin-top: 0.5rem;
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .neural-id-input {
-            padding: 0.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 0.5rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1rem;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            width: 120px;
-            font-family: monospace;
-        }
-        
-        .neural-id-input:focus {
-            outline: none;
-            border-color: #38bdf8;
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-        
-        .chat-input {
-            display: flex;
-            padding: 0.75rem;
-            background-color: rgba(15, 23, 42, 0.5);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            align-items: flex-end;
-        }
-        
-        .chat-input textarea {
-            flex-grow: 1;
+
+        .message-bubble {
+            display: inline-block;
             padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .message-bubble.user {
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            color: white;
+        }
+
+        .message-bubble.agent {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 1.5rem;
+        }
+
+        .typing-indicator {
+            padding: 0.5rem 1rem;
+            background: rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .chat-form {
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            color: white;
+            font-family: inherit;
             font-size: 1rem;
             resize: none;
+            min-height: 44px;
+            max-height: 120px;
+        }
+
+        .message-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .message-input:focus {
             outline: none;
-            transition: border-color 0.3s;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            min-height: 2.5rem;
-            max-height: 6rem;
-            overflow-y: auto;
-            line-height: 1.4;
-            margin-right: 0.5rem;
+            border-color: #06b6d4;
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
         }
-        
-        .chat-input textarea:focus {
-            border-color: #38bdf8;
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-        
-        .chat-input button {
-            background: linear-gradient(to right, #38bdf8, #06b6d4);
+
+        .send-button {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
             color: white;
             border: none;
-            border-radius: 50%;
-            width: 2.5rem;
-            height: 2.5rem;
-            margin-left: 0.5rem;
+            border-radius: 0.5rem;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            flex-shrink: 0;
-        }
-        
-        .chat-input button:active {
-            background: linear-gradient(to right, #0ea5e9, #0891b2);
-        }
-        
-        .chat-input button svg {
-            width: 1.25rem;
-            height: 1.25rem;
-        }
-        
-        /* Botão de voltar */
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background-color: transparent;
-            color: #94a3b8;
-            border: 1px solid #334155;
-            border-radius: 0.25rem;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            margin-bottom: 0.75rem;
-        }
-        
-        .back-button:active {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-        
-        .back-button svg {
-            width: 1rem;
-            height: 1rem;
-        }
-        
-        /* Estados do chat */
-        .chat-disabled .chat-input textarea,
-        .chat-disabled .chat-input button {
-            opacity: 0.5;
-            pointer-events: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-family: inherit;
         }
 
-        /* Indicador de digitação */
-        .typing-indicator {
-            display: none;
-            padding: 0.5rem 1rem;
-            background-color: rgba(56, 189, 248, 0.1);
-            color: #e0f2fe;
-            font-style: italic;
-            font-size: 0.9rem;
-            border-radius: 1rem;
-            margin: 0.5rem 0;
-            align-self: flex-start;
-            max-width: 85%;
+        .send-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
         }
 
-        .typing-indicator.show {
-            display: block;
-            animation: fadeIn 0.3s ease-in-out;
+        .send-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .messages-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .messages-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .messages-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            border-radius: 3px;
+        }
+
+        .messages-container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #0891b2, #7c3aed);
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .message-bubble {
+                max-width: 90%;
+            }
+
+            .chat-form {
+                flex-direction: column;
+            }
+
+            .send-button {
+                align-self: flex-end;
+                width: auto;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="background-pattern">
-        <div class="blob-1"></div>
-        <div class="blob-2"></div>
-    </div>
-    
-    <div class="header">
-        <a href="../" class="back-button">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg>
-        </a>
-        <div class="chat-header-title">Me Ouve AI - Chat Confidencial</div>
+    <div class="chat-container">
+        <div class="header">
+            <h1>Assistente Virtual Me Ouve AI</h1>
+            <p>Converse com nossa inteligência artificial especializada em bem-estar organizacional</p>
+        </div>
+
+        <div class="chat-interface">
+            <div class="chat-header">
+                <h3>Chat Inteligente</h3>
+                <div class="connection-status">Conectando...</div>
+            </div>
+            
+            <div class="messages-container" id="messages-container">
+                <!-- Mensagens aparecerão aqui -->
+            </div>
+            
+            <div class="typing-indicator" id="typing-indicator">
+                Assistente está digitando...
+            </div>
+            
+            <form class="chat-form" id="chat-form">
+                <textarea 
+                    id="message-input"
+                    class="message-input" 
+                    placeholder="Digite sua mensagem..."
+                    rows="1"
+                ></textarea>
+                <button 
+                    type="submit" 
+                    id="send-button"
+                    class="send-button"
+                >
+                    Enviar
+                </button>
+            </form>
+        </div>
     </div>
 
-    <main>
-        <div class="chat-container" id="chat-screen">
-            <div class="chat-header">
-                <div class="chat-header-title">Chat Ativo</div>
-            </div>
-            <div class="chat-messages" id="chat-messages">
-                <div class="typing-indicator" id="typing-indicator">
-                    Assistente está digitando...
-                </div>
-            </div>
-            <div class="chat-input">
-                <textarea id="user-input" placeholder="Digite sua mensagem..." rows="1"></textarea>
-                <button id="send-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </main>
+    <!-- Scripts do Chat -->
+    <script src="../lib/chat-ui.js"></script>
+    <script src="../lib/chat-client.js"></script>
+    <script src="../lib/chat-integration.js"></script>
 
     <script>
-        console.log("🚀 INICIANDO SISTEMA DE CHAT COM NEURAL ID - VERSÃO CORRIGIDA")
-        
-        // Variáveis globais
-        window.neuralId = ""
-        window.chatId = ""
-        window.chatState = "awaiting_neural_id" // awaiting_neural_id, active
-        const WEBHOOK_URL = "https://n8n-n8n-start.moas8k.easypanel.host/webhook/agente-me-ouve-AI"
-        
-        // Elementos do DOM
-        const chatContainer = document.getElementById("chat-screen")
-        const chatMessages = document.getElementById("chat-messages")
-        const messageInput = document.getElementById("user-input")
-        const sendButton = document.getElementById("send-button")
-        const typingIndicator = document.getElementById("typing-indicator")
-        
-        // Função para mostrar/esconder indicador de digitação
-        function showTypingIndicator() {
-            if (typingIndicator) {
-                typingIndicator.classList.add('show')
-                chatMessages.scrollTop = chatMessages.scrollHeight
-            }
-        }
-        
-        function hideTypingIndicator() {
-            if (typingIndicator) {
-                typingIndicator.classList.remove('show')
-            }
-        }
-        
-        // Função para gerar Neural ID único (1 letra + 4 números + 1 letra)
-        function generateNeuralId() {
-            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-            const numbers = '0123456789'
-            
-            const firstLetter = letters[Math.floor(Math.random() * letters.length)]
-            const fourNumbers = Array.from({length: 4}, () => numbers[Math.floor(Math.random() * numbers.length)]).join('')
-            const lastLetter = letters[Math.floor(Math.random() * letters.length)]
-            
-            return `${firstLetter}${fourNumbers}${lastLetter}`
-        }
-        
-        // Função para validar formato do Neural ID
-        function validateNeuralId(neuralId) {
-            const pattern = /^[A-Z][0-9]{4}[A-Z]$/
-            return pattern.test(neuralId)
-        }
-        
-        // Função para gerar Chat ID único
-        function generateChatId() {
-            const timestamp = Date.now()
-            const random = Math.floor(Math.random() * 10000)
-            return `chat_${timestamp}_${random}`
-        }
-        
-        // Função para enviar dados para o n8n
-        async function sendToN8n(payload) {
-            console.log("🚀 === ENVIANDO PARA N8N ===")
-            console.log("📡 URL:", WEBHOOK_URL)
-            console.log("📦 PAYLOAD:", JSON.stringify(payload, null, 2))
-            
-            try {
-                const response = await fetch(WEBHOOK_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    },
-                    body: JSON.stringify(payload),
-                    mode: "cors"
-                })
-                
-                console.log(`📊 Status: ${response.status} ${response.statusText}`)
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`)
-                }
-                
-                const text = await response.text()
-                console.log("📥 Resposta bruta:", text)
-                
-                try {
-                    const data = JSON.parse(text)
-                    console.log("✅ RESPOSTA JSON:", data)
-                    return data
-                } catch (e) {
-                    console.log("✅ RESPOSTA TEXTO:", text)
-                    return { message: text, status: "success" }
-                }
-            } catch (error) {
-                console.error("❌ ERRO:", error)
-                throw error
-            }
-        }
-        
-        // Função para adicionar mensagem ao chat
-        function addMessage(message, sender, options = {}) {
-            const messageElement = document.createElement('div')
-            messageElement.classList.add('message', `message-${sender}`)
-            
-            // Adicionar conteúdo da mensagem
-            const contentElement = document.createElement('div')
-            contentElement.textContent = message
-            messageElement.appendChild(contentElement)
-            
-            // Adicionar botões de ação rápida se fornecidos
-            if (options.quickActions && options.quickActions.length > 0) {
-                const actionsContainer = document.createElement('div')
-                actionsContainer.classList.add('quick-actions')
-                
-                options.quickActions.forEach(action => {
-                    const button = document.createElement('button')
-                    button.classList.add('quick-action-btn')
-                    button.textContent = action.text
-                    button.onclick = action.callback
-                    actionsContainer.appendChild(button)
-                })
-                
-                messageElement.appendChild(actionsContainer)
-            }
-            
-            // Adicionar campo de input se solicitado
-            if (options.showInput) {
-                const inputContainer = document.createElement('div')
-                inputContainer.classList.add('neural-id-input-container')
-                
-                const input = document.createElement('input')
-                input.classList.add('neural-id-input')
-                input.type = 'text'
-                input.placeholder = 'Ex: A2504E'
-                input.maxLength = 6
-                input.style.textTransform = 'uppercase'
-                
-                const confirmBtn = document.createElement('button')
-                confirmBtn.classList.add('quick-action-btn')
-                confirmBtn.textContent = 'Confirmar'
-                confirmBtn.onclick = () => options.inputCallback(input.value.trim().toUpperCase())
-                
-                // Permitir Enter no input
-                input.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        confirmBtn.click()
-                    }
-                })
-                
-                inputContainer.appendChild(input)
-                inputContainer.appendChild(confirmBtn)
-                messageElement.appendChild(inputContainer)
-                
-                // Focar no input após um pequeno delay
-                setTimeout(() => input.focus(), 100)
-            }
-            
-            // Adicionar display do Neural ID se fornecido
-            if (options.neuralIdDisplay) {
-                const displayElement = document.createElement('div')
-                displayElement.classList.add('neural-id-display')
-                displayElement.textContent = options.neuralIdDisplay
-                messageElement.appendChild(displayElement)
-            }
-            
-            // Adicionar timestamp
-            const timeElement = document.createElement('div')
-            timeElement.classList.add('message-time')
-            timeElement.textContent = new Date().toLocaleTimeString()
-            messageElement.appendChild(timeElement)
-            
-            chatMessages.appendChild(messageElement)
-            chatMessages.scrollTop = chatMessages.scrollHeight
-            
-            console.log(`💬 Mensagem adicionada (${sender}):`, message)
-        }
-        
-        // Função para desabilitar/habilitar chat
-        function setChatEnabled(enabled) {
-            if (enabled) {
-                chatContainer.classList.remove('chat-disabled')
-                messageInput.placeholder = "Digite sua mensagem..."
-                window.chatState = "active"
-            } else {
-                chatContainer.classList.add('chat-disabled')
-                messageInput.placeholder = "Aguardando Neural ID..."
-                window.chatState = "awaiting_neural_id"
-            }
-        }
-        
-        // Função para processar Neural ID gerado
-        async function processGeneratedNeuralId() {
-            const newNeuralId = generateNeuralId()
-            window.neuralId = newNeuralId
-            
-            // Mostrar Neural ID gerado
-            addMessage("Seu Neural ID foi gerado com sucesso!", 'system', {
-                neuralIdDisplay: newNeuralId
-            })
-            
-            addMessage("⚠️ IMPORTANTE: Guarde este Neural ID com segurança! Você precisará dele para futuras sessões.", 'system')
-            
-            // Enviar para n8n que um novo ID foi gerado
-            const payload = {
-                action: "generated",
-                neuralId: newNeuralId,
-                timestamp: new Date().toISOString(),
-                source: "neural_id_system"
-            }
-            
-            try {
-                showTypingIndicator()
-                const response = await sendToN8n(payload)
-                console.log("✅ Neural ID gerado e enviado para n8n")
-                
-                // Processar resposta do agente
-                processAgentResponse(response)
-                
-                // Inicializar chat
-                initializeChat()
-            } catch (error) {
-                console.error("❌ Erro ao enviar Neural ID gerado:", error)
-                addMessage("Erro ao registrar Neural ID. Tente novamente.", 'system')
-            } finally {
-                hideTypingIndicator()
-            }
-        }
-        
-        // Função para processar Neural ID existente
-        async function processExistingNeuralId(inputId) {
-            if (!inputId) {
-                addMessage("Por favor, digite seu Neural ID.", 'system')
-                return
-            }
-            
-            if (!validateNeuralId(inputId)) {
-                addMessage("Formato inválido. O Neural ID deve ter o formato: 1 letra + 4 números + 1 letra (ex: A2504E)", 'system')
-                return
-            }
-            
-            window.neuralId = inputId
-            
-            addMessage("Neural ID confirmado com sucesso!", 'system', {
-                neuralIdDisplay: inputId
-            })
-            
-            // Enviar para n8n que um ID existente foi usado
-            const payload = {
-                action: "provided",
-                neuralId: inputId,
-                timestamp: new Date().toISOString(),
-                source: "neural_id_system"
-            }
-            
-            try {
-                showTypingIndicator()
-                const response = await sendToN8n(payload)
-                console.log("✅ Neural ID existente enviado para n8n")
-                
-                // Processar resposta do agente
-                processAgentResponse(response)
-                
-                // Inicializar chat
-                initializeChat()
-            } catch (error) {
-                console.error("❌ Erro ao enviar Neural ID existente:", error)
-                addMessage("Erro ao confirmar Neural ID. Tente novamente.", 'system')
-            } finally {
-                hideTypingIndicator()
-            }
-        }
-        
-        // Função para processar resposta do agente
-        function processAgentResponse(response) {
-            if (!response) {
-                console.warn("⚠️ Resposta vazia do n8n")
-                return
-            }
-            
-            let agentMessage = null
-            
-            // Tentar diferentes campos de resposta (incluindo "saida" do n8n)
-            if (response.saida) {
-                agentMessage = response.saida
-            } else if (response.output) {
-                agentMessage = response.output
-            } else if (response.message) {
-                agentMessage = response.message
-            } else if (response.content) {
-                agentMessage = response.content
-            } else if (response.text) {
-                agentMessage = response.text
-            } else if (typeof response === 'string') {
-                agentMessage = response
-            }
-            
-            if (agentMessage && agentMessage.trim()) {
-                console.log("🤖 Adicionando resposta do agente:", agentMessage)
-                addMessage(agentMessage, 'agent')
-            } else {
-                console.warn("⚠️ Resposta sem conteúdo válido:", response)
-            }
-        }
-        
-        // Função para inicializar o chat após autenticação
-        async function initializeChat() {
-            // Gerar Chat ID único
-            window.chatId = generateChatId()
-            
-            // Habilitar chat
-            setChatEnabled(true)
-            
-            // Enviar notificação de início de chat para o n8n
-            const initPayload = {
-                contentType: "system",
-                action: "chat_started",
-                neuralId: window.neuralId,
-                chatId: window.chatId,
-                timestamp: new Date().toISOString(),
-                source: "chat_system",
-                userAgent: navigator.userAgent
-            }
-            
-            try {
-                const response = await sendToN8n(initPayload)
-                console.log("✅ Chat inicializado com sucesso")
-                
-                // Processar resposta do agente se houver
-                processAgentResponse(response)
-            } catch (error) {
-                console.error("❌ Erro na inicialização:", error)
-            }
-        }
-        
-        // Função para iniciar processo de Neural ID
-        function startNeuralIdProcess() {
-            addMessage("Bem-vindo ao Me Ouve AI! Para garantir sua privacidade, utilizamos um sistema de identificação único chamado Neural ID.", 'system')
-            
-            setTimeout(() => {
-                addMessage("Você já possui um Neural ID ou gostaria de gerar um novo?", 'system', {
-                    quickActions: [
-                        {
-                            text: "Gerar Novo Neural ID",
-                            callback: processGeneratedNeuralId
-                        },
-                        {
-                            text: "Já tenho um Neural ID",
-                            callback: () => {
-                                addMessage("Digite seu Neural ID existente:", 'system', {
-                                    showInput: true,
-                                    inputCallback: processExistingNeuralId
-                                })
-                            }
-                        }
-                    ]
-                })
-            }, 1000)
-        }
-        
-        // EVENT LISTENERS PARA CHAT
-        
-        // Enviar mensagem no chat
-        sendButton.addEventListener('click', async () => {
-            const message = messageInput.value.trim()
-            if (message && window.neuralId && window.chatState === "active") {
-                console.log("💬 === ENVIANDO MENSAGEM ===")
-                
-                addMessage(message, 'user')
-                messageInput.value = ''
-                
-                // Mostrar indicador de digitação
-                showTypingIndicator()
-                
-                // Payload para o n8n (sempre incluindo neuralId)
-                const payload = {
-                    contentType: "text",
-                    action: "chat_message",
-                    content: message,
-                    neuralId: window.neuralId,
-                    chatId: window.chatId,
-                    timestamp: new Date().toISOString(),
-                    source: "chat_interface",
-                    messageType: "text"
-                }
-                
-                try {
-                    const response = await sendToN8n(payload)
-                    console.log("✅ Mensagem enviada para n8n")
-                    console.log("📥 Resposta recebida:", response)
-                    
-                    // Processar resposta do agente
-                    processAgentResponse(response)
-                } catch (error) {
-                    console.error("❌ Erro ao enviar mensagem:", error)
-                    addMessage("Erro ao enviar mensagem. Tente novamente.", 'agent')
-                } finally {
-                    hideTypingIndicator()
-                }
-            }
-        })
-        
-        // Enter para enviar
-        messageInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey && window.chatState === "active") {
-                e.preventDefault()
-                sendButton.click()
-            }
-        })
-        
-        // Auto-resize do textarea
-        messageInput.addEventListener('input', () => {
-            messageInput.style.height = 'auto'
-            messageInput.style.height = messageInput.scrollHeight + 'px'
-        })
-        
-        // Função de teste global
-        window.testChatSystem = async () => {
-            console.log("🧪 === TESTANDO SISTEMA DE CHAT ===")
-            
-            if (!window.neuralId) {
-                console.warn("⚠️ Neural ID não definido. Faça login primeiro.")
-                return
-            }
-            
-            const testPayload = {
-                contentType: "text",
-                action: "chat_message",
-                content: "Mensagem de teste do sistema",
-                neuralId: window.neuralId,
-                chatId: window.chatId,
-                timestamp: new Date().toISOString(),
-                source: "test_system",
-                messageType: "text"
-            }
-            
-            try {
-                const response = await sendToN8n(testPayload)
-                console.log("✅ Teste concluído com sucesso")
-                console.log("📥 Resposta:", response)
-                processAgentResponse(response)
-            } catch (error) {
-                console.error("❌ Erro no teste:", error)
-            }
-        }
-        
-        // Inicialização do sistema
+        // Inicialização específica da página de chat
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("🔄 Inicializando sistema de chat com Neural ID...")
+            console.log('🚀 Página de chat carregada');
             
-            // Desabilitar chat inicialmente
-            setChatEnabled(false)
-            
-            // Iniciar processo de Neural ID
+            // Aguardar carregamento dos scripts
             setTimeout(() => {
-                startNeuralIdProcess()
-            }, 500)
-        })
-        
-        console.log("✅ Sistema de chat com Neural ID carregado - VERSÃO CORRIGIDA")
-        console.log("💡 Para testar o sistema: window.testChatSystem()")
+                if (window.simpleChatUI) {
+                    console.log('✅ Chat UI carregada');
+                    
+                    // Personalizar para a página de chat
+                    const messagesContainer = document.getElementById('messages-container');
+                    const connectionStatus = document.querySelector('.connection-status');
+                    
+                    if (messagesContainer && window.simpleChatUI.messagesContainer !== messagesContainer) {
+                        window.simpleChatUI.messagesContainer = messagesContainer;
+                    }
+                    
+                    if (connectionStatus && window.simpleChatUI.connectionStatus !== connectionStatus) {
+                        window.simpleChatUI.connectionStatus = connectionStatus;
+                    }
+                }
+            }, 500);
+        });
     </script>
 </body>
 </html>
